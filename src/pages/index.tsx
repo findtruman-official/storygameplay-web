@@ -3,11 +3,12 @@ import * as THREE from 'three';
 import React, { useRef } from 'react';
 import { Lights } from '@/components/R3F/Lights';
 import { Effects } from '@/components/R3F/Effects';
-import { OrbitControls, Stats } from '@react-three/drei';
+import { OrbitControls, SpotLight, Stats } from '@react-three/drei';
 import { DEV_MODE } from '@/utils';
 import { Particles } from '@/components/R3F/Particles';
 import VolumetricSpotlight from '@/components/R3F/VolumetricSpotlight';
 import { Stories } from '@/components/R3F/Stories';
+import { Rig } from '@/components/R3F/Rig';
 
 export default function HomePage() {
   const mouse = useRef([0, 0]);
@@ -31,6 +32,16 @@ export default function HomePage() {
       <color attach="background" args={['#03090e']} />
       <fog attach="fog" args={['#00474f']} />
       {/*<Rig />*/}
+
+      {/*<SpotLight*/}
+      {/*  position={[0, 20, 0]}*/}
+      {/*  color={'#3E7088'}*/}
+      {/*  // angle={Math.PI / 2}*/}
+      {/*  intensity={1}*/}
+      {/*  penumbra={1}*/}
+      {/*  radiusBottom={1200}*/}
+      {/*  distance={1000}*/}
+      {/*/>*/}
 
       <VolumetricSpotlight
         target={volumetricSpotlight}

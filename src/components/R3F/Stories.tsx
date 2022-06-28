@@ -1,99 +1,90 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import * as THREE from 'three';
-import { LightningStrike } from 'three/examples/jsm/geometries/LightningStrike';
-import { extend, useFrame } from '@react-three/fiber';
-
-extend({
-  LightningStrike,
-});
+import { useFrame } from '@react-three/fiber';
+import { Line, Point, Points } from '@react-three/drei';
+import { Bloom, EffectComposer } from '@react-three/postprocessing';
+import { useSpring } from '@react-spring/three';
 
 interface Props {
   position?: [x: number, y: number, z: number];
 }
 
+const RADIUS = 10;
+const COUNT = 6;
+const RAD = (2 * Math.PI) / COUNT;
+const points: {
+  from: [number, number, number];
+  to: [number, number, number];
+}[] = new Array(COUNT).fill(0).map((_, index) => {
+  const x = RADIUS * Math.cos(RAD * index);
+  const yFrom = index % 2 === 0 ? -1 : 1;
+  const yTo = index % 2 === 0 ? 1 : -1;
+  const z = RADIUS * Math.sin(RAD * index);
+  return { from: [x, yFrom, z], to: [x, yTo, z] };
+});
+
 export const Stories: React.FC<Props> = ({ position = [0, 0, 0] }) => {
+  const storiesRef = useRef<any>();
+
+  useFrame((state) => {
+    storiesRef.current.rotation.y += 0.0008;
+  });
+
   return (
     <>
-      <Strike source={[0, 0, 0]} dest={[100, 100, 100]} />
+      <CenterPoint />
+      <group ref={storiesRef}>
+        {points.map(({ from, to }, index) => (
+          <Strike key={index} source={[0, 0, 0]} dest={{ from, to }} />
+        ))}
+        <EffectComposer multisampling={8}>
+          <Bloom
+            kernelSize={3}
+            luminanceThreshold={0}
+            luminanceSmoothing={0.4}
+            intensity={0.6}
+          />
+        </EffectComposer>
+      </group>
     </>
   );
 };
 
-const Strike = ({ source, dest }: { source: number[]; dest: number[] }) => {
-  const rayDirection = useMemo(
-    () =>
-      new THREE.Vector3().subVectors(
-        new THREE.Vector3(...dest),
-        new THREE.Vector3(...source),
-      ),
-    [source, dest],
+const CenterPoint = () => {
+  return (
+    <mesh position={[0, 0, 0]}>
+      <sphereGeometry args={[0.2, 64, 64]}>
+        <meshBasicMaterial color={'#b5f5ec'} />
+      </sphereGeometry>
+    </mesh>
   );
+};
 
-  const rayLength = useMemo(() => {
-    return rayDirection.length();
-  }, [rayDirection]);
+const Strike = ({
+  source,
+  dest,
+}: {
+  source: [number, number, number];
+  dest: {
+    from: [number, number, number];
+    to: [number, number, number];
+  };
+}) => {
+  const ref = useRef<any>();
+  useFrame(() => {
+    ref.current.distEnd = value.d;
+  });
 
-  useFrame((state) => {});
+  const value = useSpring({
+    loop: true,
+    config: { duration: 1000 },
+    from: { d: dest.from },
+    to: { d: dest.to },
+  });
 
   return (
     <>
-      <mesh position={[0, 0, 0]}>
-        <meshBasicMaterial color={'#87e8de'} side={THREE.DoubleSide} />
-        {/*// @ts-ignore*/}
-        <lightningStrike
-          destOffset={new THREE.Vector3(...dest)}
-          sourceOffset={new THREE.Vector3(...source)}
-          radius0={4}
-          radius1={4}
-          radius0Factor={0.82}
-          minRadius={2.5}
-          maxIterations={6}
-          isEternal={true}
-          timeScale={0.6}
-          propagationTimeFactor={0.15}
-          vanishingTimeFactor={0.87}
-          subrayPeriod={0.8}
-          ramification={5}
-          recursionProbability={0.8}
-          roughness={0.85}
-          straightness={0.7}
-          onSubrayCreation={(
-            segment,
-            parentSubray,
-            childSubray,
-            lightningStrike,
-          ) => {
-            lightningStrike.subrayConePosition(
-              segment,
-              parentSubray,
-              childSubray,
-              0.6,
-              0.9,
-              0.7,
-            );
-
-            // THREE.Sphere projection
-
-            const vec1 = new THREE.Vector3();
-            const vec2 = new THREE.Vector3();
-            vec1.subVectors(
-              childSubray.pos1,
-              lightningStrike.rayParameters.sourceOffset,
-            );
-            vec2.set(0, 0, 0);
-
-            if (lightningStrike.randomGenerator.random() < 0.7) {
-              vec2.copy(rayDirection).multiplyScalar(rayLength * 1.0865);
-            }
-
-            vec1.add(vec2).setLength(rayLength);
-            childSubray.pos1.addVectors(
-              vec1,
-              lightningStrike.rayParameters.sourceOffset,
-            );
-          }}
-        />
-      </mesh>
+      <Line ref={ref} points={[source, dest.from]} color={'#87e8de'} />
     </>
   );
 };
