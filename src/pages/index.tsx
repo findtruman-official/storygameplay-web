@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import React, { useRef } from 'react';
 import { Lights } from '@/components/R3F/Lights';
 import { Effects } from '@/components/R3F/Effects';
-import { OrbitControls, SpotLight, Stats } from '@react-three/drei';
+import { Environment, OrbitControls, Stats } from '@react-three/drei';
 import { DEV_MODE } from '@/utils';
 import { Particles } from '@/components/R3F/Particles';
 import VolumetricSpotlight from '@/components/R3F/VolumetricSpotlight';
@@ -23,15 +23,18 @@ export default function HomePage() {
         // aspect: window.innerWidth / window.innerHeight,
         // near: 10,
         far: 1000,
-        position: [10, 10, 10],
+        position: [-30, -15, 30],
+        // position: [6.5, 1, 6.5],
         rotation: [0, 90, 90],
       }}
     >
       {DEV_MODE && <Stats />}
       <OrbitControls />
-      <color attach="background" args={['#03090e']} />
+      {/*<color attach="background" args={['#03090e']} />*/}
       <fog attach="fog" args={['#00474f']} />
       {/*<Rig />*/}
+
+      <Environment background={true} files="/env_4.hdr" />
 
       {/*<SpotLight*/}
       {/*  position={[0, 20, 0]}*/}

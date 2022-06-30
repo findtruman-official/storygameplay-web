@@ -73,7 +73,7 @@ export const Particles = () => {
     <>
       <instancedMesh ref={mesh} args={[geometry, undefined, 2000]}>
         <boxBufferGeometry args={[0.25, 0.5, 0.05]} />
-        <meshPhongMaterial color="#050505" />
+        <meshPhongMaterial color="#002329" />
       </instancedMesh>
     </>
   );
