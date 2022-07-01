@@ -1,0 +1,45 @@
+
+@img-size: 160px;
+.card {
+  padding: 8px;
+  width: 100%;
+
+  display: flex;
+  column-gap: 8px;
+
+  &>img {
+    width: @img-size;
+    height: @img-size;
+  }
+
+  &>div {
+    flex: 1;
+    
+    display: flex;
+    flex-direction: column;
+    &>h4 {
+      margin: 0;
+      font-size: 1.4em;
+      font-weight: bold;
+    }
+    &>p {
+      flex: 1;
+    }
+
+    &>div {
+
+      display: flex;
+      column-gap: 8px;
+
+      // ThemedButton
+      &>div {
+        flex: 1;
+      }
+      &>div>div{
+        padding: 8px;
+        font-size: 0.6em;
+      }
+      
+    }
+  }
+}
