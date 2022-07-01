@@ -8,6 +8,7 @@
     "start": "npm run dev"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@react-spring/three": "^9.4.5",
     "@react-three/drei": "^9.14.1",
     "@react-three/fiber": "^8.0.27",

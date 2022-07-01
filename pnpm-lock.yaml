@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@ant-design/icons': ^4.7.0
   '@react-spring/three': ^9.4.5
   '@react-three/drei': ^9.14.1
   '@react-three/fiber': ^8.0.27
@@ -18,6 +19,7 @@ specifiers:
   umi: ^4.0.1
 
 dependencies:
+  '@ant-design/icons': 4.7.0
   '@react-spring/three': 9.4.5_e9a6bb5b1ce9f987c980bdf6c74b255e
   '@react-three/drei': 9.14.1_e9a6bb5b1ce9f987c980bdf6c74b255e
   '@react-three/fiber': 8.0.27_three@0.141.0

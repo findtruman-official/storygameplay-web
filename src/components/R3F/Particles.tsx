@@ -1,5 +1,5 @@
 import React, { useMemo, useRef } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame, useLoader, useThree } from '@react-three/fiber';
 import { BoxBufferGeometry } from 'three';
 import * as THREE from 'three';
 
@@ -7,6 +7,9 @@ export const Particles = () => {
   const mesh = useRef<any>();
   const { size, viewport } = useThree();
   const aspect = size.width / viewport.width;
+
+  // const bookTexture = useLoader(THREE.TextureLoader, BookTexture);
+  const bookTexture1 = useLoader(THREE.TextureLoader, 'BlackLake.png');
 
   const geometry = useMemo(() => new BoxBufferGeometry(1, 1, 1), []);
 
@@ -19,7 +22,7 @@ export const Particles = () => {
       return -x + r;
     };
 
-    for (let i = 0; i < 2000; i++) {
+    for (let i = 0; i < 200; i++) {
       const t = Math.random() * 100;
       const factor = 20 + Math.random() * 100;
       const speed = 0.005;
@@ -71,9 +74,9 @@ export const Particles = () => {
 
   return (
     <>
-      <instancedMesh ref={mesh} args={[geometry, undefined, 2000]}>
+      <instancedMesh ref={mesh} args={[geometry, undefined, 200]}>
         <boxBufferGeometry args={[0.25, 0.5, 0.05]} />
-        <meshPhongMaterial color="#002329" />
+        <meshPhongMaterial map={bookTexture1} />
       </instancedMesh>
     </>
   );

@@ -1,0 +1,40 @@
+.themeButton {
+  display: inline-block;
+  padding: 2px;
+  width: fit-content;
+  letter-spacing: 0.5px;
+  font-size: 28px;
+  // font-weight: bold;
+  font-weight: 500;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.95);
+  background-image: linear-gradient(
+    45deg,
+    #5b4fff 0%,
+    #fb3120 50%,
+    #e2bdb9 100%
+  );
+  box-sizing: border-box;
+}
+.themeButtonClickable {
+  cursor: pointer;
+}
+.themeButtonLoading {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.themeButtonContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 36px;
+  width: 100%;
+  transition: all 0.3s;
+  background-color: rgba(0, 0, 0, 0.85);
+}
+.themeButtonContentClickable:hover {
+  background-color: transparent;
+}
+.themeButtonContentClickableMobile:active {
+  background-color: transparent;
+}

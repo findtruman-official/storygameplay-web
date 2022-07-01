@@ -26,7 +26,7 @@ const PointLight: FC<PointLightProps> = ({ position }) => {
 
   return (
     <mesh ref={meshRef} position={position}>
-      <sphereGeometry args={[2, 64]} />
+      <sphereGeometry args={[1, 64]} />
       <meshBasicMaterial color={'#B7D6ED'} side={THREE.DoubleSide} />
       <pointLight color={'#B7D6ED'} intensity={1} />
     </mesh>
