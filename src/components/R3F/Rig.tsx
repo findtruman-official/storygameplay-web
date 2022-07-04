@@ -1,11 +1,16 @@
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
+import { getConicalSpiral } from '@/utils';
 
 export function Rig({ v = new THREE.Vector3() }) {
   return useFrame((state) => {
-    state.camera.position.lerp(
-      v.set(state.mouse.x / 2, state.mouse.y / 2, 10),
-      0.05,
-    );
+    const t = Math.PI - state.clock.elapsedTime * 0.65;
+    if (t < -0.1) {
+      // const { x, y, z } = state.camera.position;
+      // state.camera.position.lerp(v.set(x, state.mouse.y / 2 + 0.35, z), 0.05);
+    } else {
+      const [x, y, z] = getConicalSpiral(t, 6.8, 4);
+      state.camera.position.lerp(v.set(x, y, z), 0.5);
+    }
   });
 }

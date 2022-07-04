@@ -1,15 +1,26 @@
 import React, { useMemo, useRef } from 'react';
-import { useFrame, useLoader, useThree } from '@react-three/fiber';
+import { useFrame, useLoader } from '@react-three/fiber';
 import { BoxBufferGeometry } from 'three';
 import * as THREE from 'three';
 
-export const Particles = () => {
-  const mesh = useRef<any>();
-  const { size, viewport } = useThree();
-  const aspect = size.width / viewport.width;
+const TextureUrls = new Array(15)
+  .fill(0)
+  .map((_, index) => `textures/movie${index + 1}.png`);
 
-  // const bookTexture = useLoader(THREE.TextureLoader, BookTexture);
-  const bookTexture1 = useLoader(THREE.TextureLoader, 'BlackLake.png');
+export const ParticlesGroup = () => {
+  const bookTextures = useLoader(THREE.TextureLoader, TextureUrls);
+
+  return (
+    <>
+      {bookTextures.map((t, index) => (
+        <Particles key={index} texture={t} count={20} />
+      ))}
+    </>
+  );
+};
+
+const Particles = ({ texture, count }: { texture: any; count: number }) => {
+  const mesh = useRef<any>();
 
   const geometry = useMemo(() => new BoxBufferGeometry(1, 1, 1), []);
 
@@ -19,7 +30,7 @@ export const Particles = () => {
     const temp = [];
     const r = 40;
 
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < count; i++) {
       const t = Math.random() * 100;
       const factor = 20 + Math.random() * 100;
       const speed = 0.005;
@@ -28,10 +39,10 @@ export const Particles = () => {
 
       const yFactor = -25 + Math.random() * 50;
 
-      const zRange = Math.sqrt(10 * 10 - xFactor * xFactor);
+      const zRange = Math.sqrt(8 * 8 - xFactor * xFactor);
 
       const zFactor =
-        Math.abs(xFactor) <= 10
+        Math.abs(xFactor) <= 8
           ? Math.floor(Math.random() * (50 - zRange + 1)) + zRange
           : -25 + Math.random() * 50;
 
@@ -44,7 +55,6 @@ export const Particles = () => {
         zFactor: Math.floor(Math.random() * 10) % 2 === 0 ? zFactor : -zFactor,
         mx: 0,
         my: 0,
-        texture: bookTextures[Math.floor(Math.random() * 15)],
       });
     }
     return temp;
@@ -77,9 +87,9 @@ export const Particles = () => {
 
   return (
     <>
-      <instancedMesh ref={mesh} args={[geometry, undefined, 200]}>
-        <boxBufferGeometry args={[0.25, 0.5, 0.05]} />
-        <meshPhongMaterial map={bookTexture1} />
+      <instancedMesh ref={mesh} args={[geometry, undefined, count]}>
+        <boxBufferGeometry args={[0.4, 0.6, 0.05]} />
+        <meshBasicMaterial map={texture} />
       </instancedMesh>
     </>
   );

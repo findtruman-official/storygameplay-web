@@ -1,11 +1,8 @@
 import { Canvas } from '@react-three/fiber';
-import * as THREE from 'three';
 import React, { useRef } from 'react';
-import { Lights } from '@/components/R3F/Lights';
-import { Effects } from '@/components/R3F/Effects';
-import { Environment, OrbitControls, Stars, Stats } from '@react-three/drei';
+import { Environment, OrbitControls, Stats } from '@react-three/drei';
 import { DEV_MODE } from '@/utils';
-import { Particles } from '@/components/R3F/Particles';
+import { ParticlesGroup } from '@/components/R3F/Particles';
 import VolumetricSpotlight from '@/components/R3F/VolumetricSpotlight';
 import { Stories } from '@/components/R3F/Stories';
 import { Rig } from '@/components/R3F/Rig';
@@ -21,7 +18,7 @@ export default function HomePage() {
       camera={{
         fov: 100,
         // aspect: window.innerWidth / window.innerHeight,
-        // near: 10,
+        near: 1,
         far: 1000,
         // position: [-30, -15, 30],
         // position: [6.5, 1, 6.5],
@@ -29,21 +26,27 @@ export default function HomePage() {
       }}
     >
       {DEV_MODE && <Stats />}
-      <OrbitControls />
+      <OrbitControls
+        // enableZoom={false}
+        enablePan={false}
+        minPolarAngle={Math.PI / 3}
+      />
       {/*<color attach="background" args={['#03090e']} />*/}
       <fog attach="fog" args={['#00474f']} />
-      {/*<Rig />*/}
+      <Rig />
 
-      <Environment background={true} files="/env_4.hdr" />
-      <Stars
-        radius={100}
-        depth={50}
-        count={2000}
-        factor={4}
-        saturation={0}
-        fade
-        speed={1}
-      />
+      <Environment background={true} files="/env.hdr" />
+      {/*<Environment background={true} files="/env_22.hdr" />*/}
+
+      {/*<Stars*/}
+      {/*  radius={100}*/}
+      {/*  depth={50}*/}
+      {/*  count={2000}*/}
+      {/*  factor={4}*/}
+      {/*  saturation={0}*/}
+      {/*  fade*/}
+      {/*  speed={1}*/}
+      {/*/>*/}
 
       {/*<SpotLight*/}
       {/*  position={[0, 20, 0]}*/}
@@ -65,12 +68,12 @@ export default function HomePage() {
         angle={Math.PI / 3}
       />
 
-      <Particles />
+      <ParticlesGroup />
 
       <Stories />
 
-      <Lights position={[0, 18, 0]} />
-      <Effects />
+      {/*<Lights position={[0, 18, 0]} />*/}
+      {/*<Effects />*/}
 
       <pointLight
         color="#3E7088"

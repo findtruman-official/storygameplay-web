@@ -10,8 +10,9 @@ interface Props {
   data?: {
     name: string;
     videoUrl: string;
-    gameSceneUrl: string;
-    storySceneUrl: string;
+    gameSceneUrl?: string;
+    storySceneUrl?: string;
+    twitterUrl?: string;
   };
   visible: boolean;
   onClose: () => void;
@@ -34,7 +35,7 @@ export const StoryModal: React.FC<Props> = ({ data, visible, onClose }) => {
       footer={null}
       title={null}
       bodyStyle={{ padding: 0 }}
-      width={800}
+      width={1000}
     >
       {data && (
         <>
@@ -85,34 +86,54 @@ export const StoryModal: React.FC<Props> = ({ data, visible, onClose }) => {
           <div style={{ padding: 24 }}>
             <div className={styles.storyName}>{data.name}</div>
             <Row align={'middle'} justify={'space-evenly'}>
-              <Col>
-                <a href={data.gameSceneUrl} target={'_blank'}>
-                  <ThemeButton
-                    contentStyle={{
-                      fontSize: 18,
-                      padding: '4px 30px',
-                      width: 160,
-                    }}
-                    onClick={() => {}}
-                  >
-                    Play
-                  </ThemeButton>
-                </a>
-              </Col>
-              <Col>
-                <a href={data.storySceneUrl} target={'_blank'}>
-                  <ThemeButton
-                    contentStyle={{
-                      fontSize: 18,
-                      padding: '4px 30px',
-                      width: 160,
-                    }}
-                    onClick={() => {}}
-                  >
-                    Write Story
-                  </ThemeButton>
-                </a>
-              </Col>
+              {data.gameSceneUrl && (
+                <Col>
+                  <a href={data.gameSceneUrl} target={'_blank'}>
+                    <ThemeButton
+                      contentStyle={{
+                        fontSize: 18,
+                        padding: '4px 30px',
+                        width: 160,
+                      }}
+                      onClick={() => {}}
+                    >
+                      Play
+                    </ThemeButton>
+                  </a>
+                </Col>
+              )}
+              {data.storySceneUrl && (
+                <Col>
+                  <a href={data.storySceneUrl} target={'_blank'}>
+                    <ThemeButton
+                      contentStyle={{
+                        fontSize: 18,
+                        padding: '4px 30px',
+                        width: 160,
+                      }}
+                      onClick={() => {}}
+                    >
+                      Write Story
+                    </ThemeButton>
+                  </a>
+                </Col>
+              )}
+              {data.twitterUrl && (
+                <Col>
+                  <a href={data.twitterUrl} target={'_blank'}>
+                    <ThemeButton
+                      contentStyle={{
+                        fontSize: 18,
+                        padding: '4px 30px',
+                        width: 160,
+                      }}
+                      onClick={() => {}}
+                    >
+                      View Story
+                    </ThemeButton>
+                  </a>
+                </Col>
+              )}
             </Row>
           </div>
         </>
