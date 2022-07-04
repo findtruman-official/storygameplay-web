@@ -18,31 +18,34 @@ export const Particles = () => {
   const particles = useMemo(() => {
     const temp = [];
     const r = 40;
-    const getY = (x: number) => {
-      return -x + r;
-    };
 
     for (let i = 0; i < 200; i++) {
       const t = Math.random() * 100;
       const factor = 20 + Math.random() * 100;
       const speed = 0.005;
 
-      const xR = Math.random() * r;
-      const xFactor =
-        Math.floor(Math.random() * 10) % 2 === 0
-          ? -Math.random() * xR
-          : Math.random() * xR;
+      const xFactor = -25 + Math.random() * 50;
 
-      const zR = Math.sqrt(r * r - xFactor * xFactor);
+      const yFactor = -25 + Math.random() * 50;
+
+      const zRange = Math.sqrt(10 * 10 - xFactor * xFactor);
+
       const zFactor =
-        Math.floor(Math.random() * 10) % 2 === 0
-          ? -Math.random() * zR
-          : Math.random() * zR;
+        Math.abs(xFactor) <= 10
+          ? Math.floor(Math.random() * (50 - zRange + 1)) + zRange
+          : -25 + Math.random() * 50;
 
-      const yR = getY(Math.sqrt(xFactor * xFactor + zFactor * zFactor));
-      const yFactor = Math.random() * yR - 18;
-
-      temp.push({ t, factor, speed, xFactor, yFactor, zFactor, mx: 0, my: 0 });
+      temp.push({
+        t,
+        factor,
+        speed,
+        xFactor: xFactor,
+        yFactor,
+        zFactor: Math.floor(Math.random() * 10) % 2 === 0 ? zFactor : -zFactor,
+        mx: 0,
+        my: 0,
+        texture: bookTextures[Math.floor(Math.random() * 15)],
+      });
     }
     return temp;
   }, []);
