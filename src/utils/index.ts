@@ -9,3 +9,6 @@ export const getConicalSpiral = (t: number, radius: number, height: number) => {
 export const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_3385897_341fnmqjnep.js',
 });
+
+export * from './clipboard';
+export * from './web3';
