@@ -47,9 +47,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({
     }
 
     const newAccount = await targetWallet.agent.connect({
-      onConnected: (web3) => {
-        
-      },
+      onConnected: (web3) => {},
       onAccountChanged: ({ account }) => {
         if (state.wallet !== newWallet) {
           console.warn(
@@ -119,7 +117,6 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({
         }
 
         await connect({ wallet: targetWallet.wallet });
-
       }
     }
   };
