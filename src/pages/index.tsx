@@ -1,5 +1,6 @@
-import { Canvas } from '@react-three/fiber';
-import React, { useEffect, Suspense } from 'react';
+import { Canvas, useThree } from '@react-three/fiber';
+import React, { useEffect, Suspense, useRef, useState } from 'react';
+import * as THREE from 'three';
 import {
   Environment,
   Loader,
@@ -13,9 +14,17 @@ import { Stories } from '@/components/R3F/Stories';
 import { Rig } from '@/components/R3F/Rig';
 import { Title } from '@/components/R3F/Title';
 
+export let CanvasLoaded = false;
+
 export default function HomePage() {
   useEffect(() => {
     document.body.style.cursor = `url('/cursor.png'), auto`;
+
+    THREE.DefaultLoadingManager.onProgress = function (item, loaded, total) {
+      if (loaded === total) {
+        CanvasLoaded = true;
+      }
+    };
   }, []);
 
   return (

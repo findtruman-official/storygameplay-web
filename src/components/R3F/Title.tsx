@@ -25,7 +25,7 @@ export const Title = () => {
       <Image
         ref={textRef}
         scale={3}
-        position={[0, 3, 0]}
+        position={[0, -9, 0]}
         url={'/logo.png'}
         transparent={true}
       />
