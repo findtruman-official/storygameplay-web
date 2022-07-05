@@ -1,4 +1,3 @@
-
 @img-size: 160px;
 .card {
   padding: 8px;
@@ -7,39 +6,37 @@
   display: flex;
   column-gap: 8px;
 
-  &>img {
+  & > img {
     width: @img-size;
     height: @img-size;
   }
 
-  &>div {
+  & > div {
     flex: 1;
-    
+
     display: flex;
     flex-direction: column;
-    &>h4 {
+    & > h4 {
       margin: 0;
       font-size: 1.4em;
       font-weight: bold;
     }
-    &>p {
+    & > p {
       flex: 1;
     }
 
-    &>div {
-
+    & > div {
       display: flex;
       column-gap: 8px;
 
       // ThemedButton
-      &>div {
+      & > div {
         flex: 1;
       }
-      &>div>div{
+      & > div > div {
         padding: 8px;
         font-size: 0.6em;
       }
-      
     }
   }
 }

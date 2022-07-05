@@ -1,12 +1,26 @@
 import React, { useMemo, useRef } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame, useLoader } from '@react-three/fiber';
 import { BoxBufferGeometry } from 'three';
 import * as THREE from 'three';
 
-export const Particles = () => {
+const TextureUrls = new Array(15)
+  .fill(0)
+  .map((_, index) => `textures/movie${index + 1}.png`);
+
+export const ParticlesGroup = () => {
+  const bookTextures = useLoader(THREE.TextureLoader, TextureUrls);
+
+  return (
+    <>
+      {bookTextures.map((t, index) => (
+        <Particles key={index} texture={t} count={20} />
+      ))}
+    </>
+  );
+};
+
+const Particles = ({ texture, count }: { texture: any; count: number }) => {
   const mesh = useRef<any>();
-  const { size, viewport } = useThree();
-  const aspect = size.width / viewport.width;
 
   const geometry = useMemo(() => new BoxBufferGeometry(1, 1, 1), []);
 
@@ -15,31 +29,33 @@ export const Particles = () => {
   const particles = useMemo(() => {
     const temp = [];
     const r = 40;
-    const getY = (x: number) => {
-      return -x + r;
-    };
 
-    for (let i = 0; i < 2000; i++) {
+    for (let i = 0; i < count; i++) {
       const t = Math.random() * 100;
       const factor = 20 + Math.random() * 100;
       const speed = 0.005;
 
-      const xR = Math.random() * r;
-      const xFactor =
-        Math.floor(Math.random() * 10) % 2 === 0
-          ? -Math.random() * xR
-          : Math.random() * xR;
+      const xFactor = -25 + Math.random() * 50;
 
-      const zR = Math.sqrt(r * r - xFactor * xFactor);
+      const yFactor = -25 + Math.random() * 50;
+
+      const zRange = Math.sqrt(8 * 8 - xFactor * xFactor);
+
       const zFactor =
-        Math.floor(Math.random() * 10) % 2 === 0
-          ? -Math.random() * zR
-          : Math.random() * zR;
+        Math.abs(xFactor) <= 8
+          ? Math.floor(Math.random() * (50 - zRange + 1)) + zRange
+          : -25 + Math.random() * 50;
 
-      const yR = getY(Math.sqrt(xFactor * xFactor + zFactor * zFactor));
-      const yFactor = Math.random() * yR - 18;
-
-      temp.push({ t, factor, speed, xFactor, yFactor, zFactor, mx: 0, my: 0 });
+      temp.push({
+        t,
+        factor,
+        speed,
+        xFactor: xFactor,
+        yFactor,
+        zFactor: Math.floor(Math.random() * 10) % 2 === 0 ? zFactor : -zFactor,
+        mx: 0,
+        my: 0,
+      });
     }
     return temp;
   }, []);
@@ -71,9 +87,9 @@ export const Particles = () => {
 
   return (
     <>
-      <instancedMesh ref={mesh} args={[geometry, undefined, 2000]}>
-        <boxBufferGeometry args={[0.25, 0.5, 0.05]} />
-        <meshPhongMaterial color="#002329" />
+      <instancedMesh ref={mesh} args={[geometry, undefined, count]}>
+        <boxBufferGeometry args={[0.4, 0.6, 0.05]} />
+        <meshBasicMaterial map={texture} />
       </instancedMesh>
     </>
   );

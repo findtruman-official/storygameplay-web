@@ -9,6 +9,9 @@ import { listBadgeStatus } from '@/services/api';
 import { useERC20Balance } from '@/hooks/web3/useERC20Balance';
 import { FTT_ADDRESS } from '@/consts';
 import { readableTokens } from '@/utils';
+import { ThemeButton } from '@/components/Button';
+import { globalEvent } from '@/utils/events';
+import { Polygon } from '@/components/svg/Polygon';
 const AchievementPage: React.FC<{}> = (props) => {
   const { account } = useWallet();
 
@@ -31,13 +34,27 @@ const AchievementPage: React.FC<{}> = (props) => {
     <div className={styles.page}>
       <Title loading={tokenBalance.loading}>My Tokens</Title>
 
-      <Row justify="center">
-        <Col>
-          <NumberCard number={readableTokens(tokenBalance.data || '0')} />
-        </Col>
-      </Row>
+      {account ? (
+        <Row justify="center">
+          <Col>
+            <NumberCard number={readableTokens(tokenBalance.data || '0')} />
+          </Col>
+        </Row>
+      ) : (
+        <ThemeButton
+          style={{ display: 'block', margin: '0 auto' }}
+          onClick={() => globalEvent.openConnectWalletModal()}
+        >
+          Connect Wallet
+        </ThemeButton>
+      )}
 
       <Title loading={badgeReq.loading}> My Achievements </Title>
+      <div className={styles.tip}>
+        <span>FindTruman badges will be minted on the </span>
+        <Polygon />
+        <span> Polygon Network.</span>
+      </div>
 
       <Row gutter={[32, 32]}>
         {badges.map((a) => (
@@ -66,21 +83,14 @@ const Title: React.FC<{ children?: React.ReactNode; loading?: boolean }> = (
   props,
 ) => {
   return (
-    <h2 className={styles.title}>
+    <div className={styles.title}>
       {props.children}
       {props.loading && <div>Loading...</div>}
-    </h2>
+    </div>
   );
 };
 
-const Scenes = [
-  'black-water-lake',
-  'scarlet-church',
-  'metaverse-carnival',
-  'beelzebub',
-  'scene05',
-  'scene06',
-];
+const Scenes = ['black-water-lake', 'bloody-church', 'the-trip', 'the-abyss'];
 
 const LoadingScenes = Scenes.map((scene) => ({
   scene: scene,

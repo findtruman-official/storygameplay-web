@@ -2,8 +2,8 @@
   "name": "fccweb",
   "private": true,
   "scripts": {
-    "dev": "umi dev",
     "build": "umi build",
+    "dev": "umi dev",
     "postinstall": "umi setup",
     "start": "npm run dev"
   },

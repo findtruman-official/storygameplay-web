@@ -10,6 +10,7 @@ import type React from 'react';
 import { DisabledThemeButton, ThemeButton } from '../Button';
 import { BorderOnHover } from '../Colorful';
 import styles from './Card.less';
+import { globalEvent } from '@/utils/events';
 
 export const AchievementCard: React.FC<{
   scene: string;
@@ -68,7 +69,16 @@ export const AchievementCard: React.FC<{
   const loading = badge.loading || tokens.loading;
 
   const renderButtons = () => {
-    if (badgeStatus === 'not-eligible' || tokensStatus === 'not-eligible') {
+    if (!account) {
+      return (
+        <ThemeButton onClick={() => globalEvent.openConnectWalletModal()}>
+          <Text>Connect Wallet</Text>
+        </ThemeButton>
+      );
+    } else if (
+      badgeStatus === 'not-eligible' ||
+      tokensStatus === 'not-eligible'
+    ) {
       return (
         <DisabledThemeButton>
           <Text>Not Eligible</Text>

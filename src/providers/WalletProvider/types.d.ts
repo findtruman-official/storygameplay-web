@@ -15,9 +15,7 @@ declare interface WalletAgent {
   getAccount: () => Promise<{ account: string; web3: any }>;
 }
 
-
 declare interface WalletConfig {
   wallet: WalletType;
   agent: WalletAgent;
-
 }

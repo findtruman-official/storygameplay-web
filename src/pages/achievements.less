@@ -1,17 +1,14 @@
 .page {
-
   width: 1000px;
   margin: 0 auto;
 
   .title {
-    margin: 24px;
+    padding: 64px 0 0 0;
     text-align: center;
-    font-size: 4rem;
-
-    font-family: ThemeFont;
+    font-size: 3rem;
 
     position: relative;
-    &>div {
+    & > div {
       position: absolute;
       top: 0;
       bottom: 0;
@@ -21,9 +18,18 @@
       font-size: 1rem;
     }
   }
+  .title:first-child {
+    padding-top: 128px;
+  }
+
+  .tip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.65);
+    margin-bottom: 24px;
+  }
 
   padding-bottom: 100px;
 }
-
-
-
