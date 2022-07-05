@@ -30,12 +30,6 @@ export const Stories: React.FC<Props> = ({ position = [0, 0, 0] }) => {
   const [storyData, setStoryData] = useState<any>();
   const [storyModalVisible, setStoryModalVisible] = useState(false);
 
-  useEffect(() => {
-    document.body.style.cursor = hovered ? 'pointer' : 'auto';
-  }, [hovered]);
-
-  useFrame((state) => {});
-
   const BlackLake = useFBX('BlackLake.FBX');
   const Metaverse = useFBX('Metaverse.FBX');
   const Church = useFBX('Church.FBX');

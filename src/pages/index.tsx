@@ -1,14 +1,19 @@
 import { Canvas } from '@react-three/fiber';
-import React, { useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Environment, OrbitControls, Stats } from '@react-three/drei';
 import { DEV_MODE } from '@/utils';
 import { ParticlesGroup } from '@/components/R3F/Particles';
 import VolumetricSpotlight from '@/components/R3F/VolumetricSpotlight';
 import { Stories } from '@/components/R3F/Stories';
 import { Rig } from '@/components/R3F/Rig';
+import { Title } from '@/components/R3F/Title';
 
 export default function HomePage() {
   const volumetricSpotlight = React.useRef<any>();
+
+  useEffect(() => {
+    document.body.style.cursor = `url('/cursor.png'), auto`;
+  }, []);
 
   return (
     <Canvas
@@ -18,8 +23,6 @@ export default function HomePage() {
         fov: 100,
         near: 1,
         far: 1000,
-        // position: [-30, -15, 30],
-        // position: [6.5, 1, 6.5],
         rotation: [0, 90, 90],
       }}
     >
@@ -54,6 +57,8 @@ export default function HomePage() {
         color={'#3E7088'}
         angle={Math.PI / 3}
       />
+
+      <Title />
 
       <ParticlesGroup />
 
