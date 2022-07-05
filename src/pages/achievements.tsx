@@ -9,6 +9,8 @@ import { listBadgeStatus } from '@/services/api';
 import { useERC20Balance } from '@/hooks/web3/useERC20Balance';
 import { FTT_ADDRESS } from '@/consts';
 import { readableTokens } from '@/utils';
+import { ThemeButton } from '@/components/Button';
+import { globalEvent } from '@/utils/events';
 const AchievementPage: React.FC<{}> = (props) => {
   const { account } = useWallet();
 
@@ -29,13 +31,23 @@ const AchievementPage: React.FC<{}> = (props) => {
 
   return (
     <div className={styles.page}>
+      <Title loading={tokenBalance.loading}>Polygon!</Title>
       <Title loading={tokenBalance.loading}>My Tokens</Title>
 
-      <Row justify="center">
-        <Col>
-          <NumberCard number={readableTokens(tokenBalance.data || '0')} />
-        </Col>
-      </Row>
+      {account ? (
+        <Row justify="center">
+          <Col>
+            <NumberCard number={readableTokens(tokenBalance.data || '0')} />
+          </Col>
+        </Row>
+      ) : (
+        <ThemeButton
+          style={{ display: 'block', margin: '0 auto' }}
+          onClick={() => globalEvent.openConnectWalletModal()}
+        >
+          Connect Wallet
+        </ThemeButton>
+      )}
 
       <Title loading={badgeReq.loading}> My Achievements </Title>
 
