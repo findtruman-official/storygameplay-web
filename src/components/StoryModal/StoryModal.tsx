@@ -39,50 +39,52 @@ export const StoryModal: React.FC<Props> = ({ data, visible, onClose }) => {
     >
       {data && (
         <>
-          <div className={styles.videoContainer}>
-            <video
-              ref={ref}
-              className={styles.customVideo}
-              autoPlay={true}
-              playsInline={true}
-              muted={muted}
-              src={data.videoUrl}
-            />
-            <div className={styles.videoButtons}>
-              {playing ? (
-                <PauseCircleFilled
-                  className={styles.videoButton}
-                  onClick={() => {
-                    setPlaying(false);
-                    ref.current?.pause();
-                  }}
-                />
-              ) : (
-                <PlayCircleFilled
-                  className={styles.videoButton}
-                  onClick={() => {
-                    setPlaying(true);
-                    ref.current?.play();
-                  }}
-                />
-              )}
-              {muted ? (
-                <IconFont
-                  className={styles.videoButton}
-                  style={{ fontSize: 36 }}
-                  type={'icon-sound-Mute'}
-                  onClick={() => setMuted(false)}
-                />
-              ) : (
-                <IconFont
-                  className={styles.videoButton}
-                  style={{ fontSize: 36 }}
-                  type={'icon-sound-filling-fill'}
-                  onClick={() => setMuted(true)}
-                />
-              )}
+          {data.videoUrl && (
+            <div className={styles.videoContainer}>
+              <video
+                ref={ref}
+                className={styles.customVideo}
+                autoPlay={true}
+                playsInline={true}
+                muted={muted}
+                src={data.videoUrl}
+              />
+              <div className={styles.videoButtons}>
+                {playing ? (
+                  <PauseCircleFilled
+                    className={styles.videoButton}
+                    onClick={() => {
+                      setPlaying(false);
+                      ref.current?.pause();
+                    }}
+                  />
+                ) : (
+                  <PlayCircleFilled
+                    className={styles.videoButton}
+                    onClick={() => {
+                      setPlaying(true);
+                      ref.current?.play();
+                    }}
+                  />
+                )}
+                {muted ? (
+                  <IconFont
+                    className={styles.videoButton}
+                    style={{ fontSize: 36 }}
+                    type={'icon-sound-Mute'}
+                    onClick={() => setMuted(false)}
+                  />
+                ) : (
+                  <IconFont
+                    className={styles.videoButton}
+                    style={{ fontSize: 36 }}
+                    type={'icon-sound-filling-fill'}
+                    onClick={() => setMuted(true)}
+                  />
+                )}
+              </div>
             </div>
-          </div>
+          )}
           <div style={{ padding: 24 }}>
             <div className={styles.storyName}>{data.name}</div>
             <Row align={'middle'} justify={'space-evenly'}>
