@@ -6,5 +6,34 @@
   padding: 24px;
 }
 
-  padding: 8px 32px;
+.menu {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  column-gap: 24px;
+  margin: 24px;
+  padding: 18px 24px;
+  font-size: 24px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.35);
+  transition: all 0.3s ease;
+}
+
+.menuItem {
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.75);
+  transition: all 0.3s ease;
+}
+.menuItem:hover {
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration: underline;
+}
+.menuItemActive {
+  transition: all 0.3s ease;
+  color: rgba(255, 255, 255, 0.95);
+  cursor: auto;
+  font-weight: bold;
 }

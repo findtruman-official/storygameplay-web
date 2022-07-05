@@ -11,6 +11,7 @@ import { FTT_ADDRESS } from '@/consts';
 import { readableTokens } from '@/utils';
 import { ThemeButton } from '@/components/Button';
 import { globalEvent } from '@/utils/events';
+import { Polygon } from '@/components/svg/Polygon';
 const AchievementPage: React.FC<{}> = (props) => {
   const { account } = useWallet();
 
@@ -31,7 +32,6 @@ const AchievementPage: React.FC<{}> = (props) => {
 
   return (
     <div className={styles.page}>
-      <Title loading={tokenBalance.loading}>Polygon!</Title>
       <Title loading={tokenBalance.loading}>My Tokens</Title>
 
       {account ? (
@@ -50,6 +50,11 @@ const AchievementPage: React.FC<{}> = (props) => {
       )}
 
       <Title loading={badgeReq.loading}> My Achievements </Title>
+      <div className={styles.tip}>
+        <span>FindTruman badges will be minted on the </span>
+        <Polygon />
+        <span> Polygon Network.</span>
+      </div>
 
       <Row gutter={[32, 32]}>
         {badges.map((a) => (
@@ -78,10 +83,10 @@ const Title: React.FC<{ children?: React.ReactNode; loading?: boolean }> = (
   props,
 ) => {
   return (
-    <h2 className={styles.title}>
+    <div className={styles.title}>
       {props.children}
       {props.loading && <div>Loading...</div>}
-    </h2>
+    </div>
   );
 };
 
