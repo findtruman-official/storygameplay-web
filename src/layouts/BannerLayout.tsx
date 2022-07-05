@@ -31,28 +31,30 @@ export default function Layout() {
         </Row>
       )}
 
-      <div className={styles.menu}>
-        <a href={'#/'}>
-          <div
-            className={
-              pathname === '/' ? styles.menuItemActive : styles.menuItem
-            }
-          >
-            Home
-          </div>
-        </a>
-        <div>/</div>
-        <a href={'#/achievements'}>
-          <div
-            className={
-              pathname === '/achievements'
-                ? styles.menuItemActive
-                : styles.menuItem
-            }
-          >
-            Achievements
-          </div>
-        </a>
+      <div className={styles.menuContainer}>
+        <div className={styles.menu}>
+          <a href={'#/'}>
+            <div
+              className={
+                pathname === '/' ? styles.menuItemActive : styles.menuItem
+              }
+            >
+              Home
+            </div>
+          </a>
+          <div>/</div>
+          <a href={'#/achievements'}>
+            <div
+              className={
+                pathname === '/achievements'
+                  ? styles.menuItemActive
+                  : styles.menuItem
+              }
+            >
+              Achievements
+            </div>
+          </a>
+        </div>
       </div>
 
       <Outlet />
