@@ -85,14 +85,7 @@ const Title: React.FC<{ children?: React.ReactNode; loading?: boolean }> = (
   );
 };
 
-const Scenes = [
-  'black-water-lake',
-  'scarlet-church',
-  'metaverse-carnival',
-  'beelzebub',
-  'scene05',
-  'scene06',
-];
+const Scenes = ['black-water-lake', 'bloody-church', 'the-trip', 'the-abyss'];
 
 const LoadingScenes = Scenes.map((scene) => ({
   scene: scene,
