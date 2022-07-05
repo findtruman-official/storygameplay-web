@@ -8,7 +8,6 @@ import { Stories } from '@/components/R3F/Stories';
 import { Rig } from '@/components/R3F/Rig';
 
 export default function HomePage() {
-  const mouse = useRef([0, 0]);
   const volumetricSpotlight = React.useRef<any>();
 
   return (
@@ -17,7 +16,6 @@ export default function HomePage() {
       shadows
       camera={{
         fov: 100,
-        // aspect: window.innerWidth / window.innerHeight,
         near: 1,
         far: 1000,
         // position: [-30, -15, 30],
@@ -27,26 +25,15 @@ export default function HomePage() {
     >
       {DEV_MODE && <Stats />}
       <OrbitControls
-        // enableZoom={false}
+        enableZoom={DEV_MODE}
         enablePan={false}
         minPolarAngle={Math.PI / 3}
       />
-      {/*<color attach="background" args={['#03090e']} />*/}
+
       <fog attach="fog" args={['#00474f']} />
       <Rig />
 
       <Environment background={true} files="/env.hdr" />
-      {/*<Environment background={true} files="/env_22.hdr" />*/}
-
-      {/*<Stars*/}
-      {/*  radius={100}*/}
-      {/*  depth={50}*/}
-      {/*  count={2000}*/}
-      {/*  factor={4}*/}
-      {/*  saturation={0}*/}
-      {/*  fade*/}
-      {/*  speed={1}*/}
-      {/*/>*/}
 
       {/*<SpotLight*/}
       {/*  position={[0, 20, 0]}*/}
