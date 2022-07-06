@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import type React from 'react';
 import { Col, Modal, Row, Alert, Button, Spin, message } from 'antd';
 import {
   LogoutOutlined,
@@ -10,7 +10,8 @@ import styles from './ConnectWalletModal.less';
 import { useWallet } from '@/providers/WalletProvider';
 import { copy } from '@/utils';
 import { BorderOnHover } from '../Colorful';
-
+import { useRequest } from 'ahooks';
+const SequenceIcon = 'https://docs.sequence.xyz/img/favicon.ico';
 interface Props {
   visible: boolean;
   onClose: () => void;
@@ -18,6 +19,7 @@ interface Props {
 
 const WalletIcon: { [type in WalletType]: React.ReactNode } = {
   metamask: <img src={MetaMaskIcon} className={styles.walletLogo} />,
+  sequence: <img src={SequenceIcon} className={styles.walletLogo} />,
   none: <></>,
 };
 
@@ -34,7 +36,18 @@ const WalletIconCardStyle: React.CSSProperties = {
 export const ConnectWalletModal: React.FC<Props> = ({ visible, onClose }) => {
   const { connected, account, connect, disconnect, wallet } = useWallet();
 
-  const [connecting, setConnecting] = useState<boolean>(false);
+  const { loading: connecting, runAsync: runConnect } = useRequest(
+    async (wallet: WalletType) => {
+      try {
+        await connect({ wallet });
+      } catch (err: any) {
+        const msg = err?.message || 'failed to connect';
+        message.error(msg);
+      }
+    },
+    { manual: true, refreshDeps: [connect] },
+  );
+
   return (
     <Modal
       onCancel={() => {
@@ -111,11 +124,7 @@ export const ConnectWalletModal: React.FC<Props> = ({ visible, onClose }) => {
               <Col>
                 <div
                   className={styles.walletCol}
-                  onClick={async () => {
-                    setConnecting(true);
-                    await connect({ wallet: 'metamask' });
-                    setConnecting(false);
-                  }}
+                  onClick={() => runConnect('metamask')}
                 >
                   <BorderOnHover
                     borderRadius={'0px'}
@@ -126,6 +135,27 @@ export const ConnectWalletModal: React.FC<Props> = ({ visible, onClose }) => {
                   </BorderOnHover>
                   <div className={styles.walletClickable}>
                     <div className={styles.walletName}>MetaMask</div>
+                    <div className={styles.clickTip}>
+                      Click to connect wallet
+                    </div>
+                  </div>
+                </div>
+              </Col>
+
+              <Col>
+                <div
+                  className={styles.walletCol}
+                  onClick={() => runConnect('sequence')}
+                >
+                  <BorderOnHover
+                    borderRadius={'0px'}
+                    style={{ width: '100%', height: '100%' }}
+                    contentStyle={WalletIconCardStyle}
+                  >
+                    {WalletIcon.sequence}
+                  </BorderOnHover>
+                  <div className={styles.walletClickable}>
+                    <div className={styles.walletName}>Sequence</div>
                     <div className={styles.clickTip}>
                       Click to connect wallet
                     </div>

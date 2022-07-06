@@ -1,3 +1,4 @@
+import { getProvider } from '@/providers/WalletProvider/agents/Sequence';
 import detectEthereumProvider from '@metamask/detect-provider';
 import { useRequest } from 'ahooks';
 import Web3 from 'web3';

@@ -24,11 +24,11 @@ export default {
     type: 'hash',
   },
   proxy: {
-    '/api': {
-      target: 'http://10.243.248.69:3301/',
+    '/fcc/api': {
+      target: 'https://findtruman.io/',
       changeOrigin: true,
-      pathRewrite: { '^/api': '' },
+      pathRewrite: { '^/fcc/api': '/fcc/api' },
     },
   },
-  publicPath: './',
+  // publicPath: './',
 };

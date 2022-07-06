@@ -3,13 +3,14 @@ import { NoneWalletConfig } from './agents/None';
 import { WalletContext } from './context';
 import { MetamaskWalletConfig } from '@/providers/WalletProvider/agents/Metamask';
 import { Outlet } from 'umi';
+import { SequenceWalletConfig } from './agents/Sequence';
 
 export interface WalletProviderProps {
   configs?: WalletConfig[];
   children?: React.ReactNode;
 }
 
-const DefaultConfigs: WalletConfig[] = [MetamaskWalletConfig];
+const DefaultConfigs: WalletConfig[] = [MetamaskWalletConfig, SequenceWalletConfig];
 
 export const WalletProvider: React.FC<WalletProviderProps> = ({
   configs = DefaultConfigs,

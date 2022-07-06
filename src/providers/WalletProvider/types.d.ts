@@ -1,4 +1,4 @@
-declare type WalletType = 'none' | 'metamask';
+declare type WalletType = 'none' | 'metamask' | 'sequence';
 
 declare interface WalletAgent {
   isConnected: () => Promise<boolean>;

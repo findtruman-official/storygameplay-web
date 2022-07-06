@@ -9,6 +9,10 @@ enum MetamaskEvent {
   DISCONNECTED = 'DISCONNECTED',
 }
 
+async function getProvider() {
+  return (await detectEthereumProvider({ mustBeMetaMask: true })) as any;
+}
+
 const MetamaskAgent: WalletAgent = {
   isConnected: async () => {
     const provider = (await detectEthereumProvider()) as any;
@@ -20,7 +24,7 @@ const MetamaskAgent: WalletAgent = {
     onDisconnected,
     onConnected,
   }) => {
-    const provider = (await detectEthereumProvider()) as any;
+    const provider = await getProvider();
     if (!provider) {
       throw new Error('Please install MetaMask!');
     }
@@ -67,7 +71,7 @@ const MetamaskAgent: WalletAgent = {
     return accounts[0] ?? '';
   },
   disconnect: async () => {
-    const provider = (await detectEthereumProvider()) as any;
+    const provider = await getProvider();
     if (provider) {
       for (const [event, cbs] of Object.entries(listeners)) {
         for (const cb of cbs) {
@@ -77,7 +81,7 @@ const MetamaskAgent: WalletAgent = {
     }
   },
   getAccount: async () => {
-    const provider = (await detectEthereumProvider()) as any;
+    const provider = await getProvider();
     if (provider) {
       const accounts = await provider.request({ method: 'eth_accounts' });
       return { account: accounts[0] ?? '', web3: new Web3(provider) };
