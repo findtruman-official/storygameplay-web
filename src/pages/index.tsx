@@ -18,7 +18,7 @@ export let CanvasLoaded = false;
 
 export default function HomePage() {
   useEffect(() => {
-    document.body.style.cursor = `url('/cursor.png'), auto`;
+    document.body.style.cursor = `url('./cursor.png'), auto`;
 
     THREE.DefaultLoadingManager.onProgress = function (item, loaded, total) {
       if (loaded === total) {
@@ -49,7 +49,7 @@ export default function HomePage() {
         <Suspense fallback={null}>
           <fog attach="fog" args={['#00474f']} />
           <Rig />
-          <Environment background={true} files="/env.hdr" />
+          <Environment background={true} files="./env.hdr" />
           <Title />
           <ParticlesGroup />
           <Stories />

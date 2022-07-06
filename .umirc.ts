@@ -30,4 +30,5 @@ export default {
       pathRewrite: { '^/api': '' },
     },
   },
+  publicPath: './',
 };

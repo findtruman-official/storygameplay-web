@@ -1,4 +1,4 @@
-export const ApiPrefix = '';
+export const ApiPrefix = '/fcc';
 
 export const FTT_ADDRESS = '0x04C2Cd6039ba455BC1a5EECf5F8f76DE361Bd46D';
 export const FTA_ADDRESS = '0x8db19489D7bF7393e353F0484D6126f8F0be64ce';

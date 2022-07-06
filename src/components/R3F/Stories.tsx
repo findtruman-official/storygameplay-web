@@ -30,13 +30,13 @@ export const Stories: React.FC<Props> = ({ position = [0, 0, 0] }) => {
   const [storyData, setStoryData] = useState<any>();
   const [storyModalVisible, setStoryModalVisible] = useState(false);
 
-  const BlackLake = useFBX('BlackLake.FBX');
-  const Metaverse = useFBX('Metaverse.FBX');
-  const Church = useFBX('Church.FBX');
-  const PoliceStation = useFBX('PoliceStation.FBX');
-  const Hospital = useFBX('Hospital.FBX');
-  const Beelzebub = useFBX('Beelzebub.FBX');
-  const SevenDeadlySins = useFBX('SevenDeadlySins.FBX');
+  const BlackLake = useFBX('./BlackLake.FBX');
+  const Metaverse = useFBX('./Metaverse.FBX');
+  const Church = useFBX('./Church.FBX');
+  const PoliceStation = useFBX('./PoliceStation.FBX');
+  const Hospital = useFBX('./Hospital.FBX');
+  const Beelzebub = useFBX('./Beelzebub.FBX');
+  const SevenDeadlySins = useFBX('./SevenDeadlySins.FBX');
 
   const fbx = useMemo(
     () => ({

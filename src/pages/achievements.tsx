@@ -53,10 +53,10 @@ const AchievementPage: React.FC<{}> = (props) => {
       <div className={styles.tip}>
         <span>FindTruman badges will be minted on the </span>
         <Polygon />
-        <span> Polygon Network.</span>
+        <span> Polygon(mumbai) Network.</span>
       </div>
 
-      <Row gutter={[32, 32]}>
+      <Row gutter={[24, 24]}>
         {badges.map((a) => (
           <Col key={a.scene} span={12}>
             <AchievementCard
