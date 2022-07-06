@@ -36,6 +36,7 @@ export const StoryModal: React.FC<Props> = ({ data, visible, onClose }) => {
       title={null}
       bodyStyle={{ padding: 0 }}
       width={1000}
+      destroyOnClose={true}
     >
       {data && (
         <>
