@@ -1,3 +1,5 @@
+import type Web3 from 'web3';
+
 declare type WalletType = 'none' | 'metamask' | 'sequence';
 
 declare interface WalletAgent {
@@ -13,6 +15,8 @@ declare interface WalletAgent {
   disconnect: () => Promise<void>;
 
   getAccount: () => Promise<{ account: string; web3: any }>;
+
+  getWeb3: () => Promise<Web3 | null>;
 }
 
 declare interface WalletConfig {

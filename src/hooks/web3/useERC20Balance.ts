@@ -1,7 +1,5 @@
-import { getProvider } from '@/providers/WalletProvider/agents/Sequence';
-import detectEthereumProvider from '@metamask/detect-provider';
+import { useWalletAgent } from '@/providers/WalletProvider';
 import { useRequest } from 'ahooks';
-import Web3 from 'web3';
 import type { AbiItem } from 'web3-utils';
 const Abi: AbiItem[] = [
   {
@@ -26,17 +24,22 @@ const Abi: AbiItem[] = [
 ];
 
 export function useERC20Balance(contract: string, address: string) {
+  const agent = useWalletAgent();
+
   return useRequest(
     async () => {
-      if (!contract || !address) return '0';
-      const provider = (await detectEthereumProvider()) as any;
-      const web3 = new Web3(provider);
+      if (!contract || !address || !agent) return '0';
+
+      const web3 = await agent.getWeb3();
+      if (!web3) return '0';
+
       const instance = new web3.eth.Contract(Abi, contract);
       const balance = await instance.methods.balanceOf(address).call();
+
       return balance;
     },
     {
-      refreshDeps: [contract, address],
+      refreshDeps: [contract, address, agent],
     },
   );
 }

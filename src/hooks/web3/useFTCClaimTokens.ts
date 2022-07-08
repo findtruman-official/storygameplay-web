@@ -1,6 +1,5 @@
-import detectEthereumProvider from '@metamask/detect-provider';
+import { useWalletAgent } from '@/providers/WalletProvider';
 import { useRequest } from 'ahooks';
-import Web3 from 'web3';
 import type { AbiItem } from 'web3-utils';
 const Abi: AbiItem[] = [
   {
@@ -35,13 +34,23 @@ export function useFTCClaimTokens(
   tokens: number,
   proofs: string[],
 ) {
+  const agent = useWalletAgent();
   return useRequest(
     async () => {
-      if (!account || !contract || !badgeId || !proofs || proofs.length === 0)
+      if (
+        !account ||
+        !contract ||
+        !badgeId ||
+        !proofs ||
+        proofs.length === 0 ||
+        !agent
+      )
         throw new Error('invalid params');
+      const web3 = await agent.getWeb3();
+      if (!web3) {
+        throw new Error('no web3');
+      }
 
-      const provider = (await detectEthereumProvider()) as any;
-      const web3 = new Web3(provider);
       const instance = new web3.eth.Contract(Abi, contract);
 
       await instance.methods['claimAchievementRewardTokens'](
@@ -54,7 +63,7 @@ export function useFTCClaimTokens(
     },
     {
       manual: true,
-      refreshDeps: [contract, badgeId, proofs, account, tokens],
+      refreshDeps: [contract, badgeId, proofs, account, tokens, agent],
     },
   );
 }

@@ -5,6 +5,7 @@ import type {
   ConnectOptions,
   ProviderRpcError,
 } from '0xsequence/dist/declarations/src/provider';
+import type { WalletAgent, WalletConfig } from '../types';
 
 // const listeners: Record<string, Function[]> = {};
 
@@ -128,6 +129,12 @@ const SequenceAgent: WalletAgent = {
     } else {
       return { account: '', web3: undefined };
     }
+  },
+
+  getWeb3: async () => {
+    const provider = getProvider();
+    // @ts-ignore
+    return provider ? new Web3(provider) : null;
   },
 };
 

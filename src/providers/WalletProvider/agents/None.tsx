@@ -1,3 +1,5 @@
+import type { WalletConfig } from '../types';
+
 export const NoneWalletConfig: WalletConfig = {
   wallet: 'none',
   agent: {
@@ -9,5 +11,6 @@ export const NoneWalletConfig: WalletConfig = {
     getAccount: async () => {
       throw new Error('do not getAccount on NoneWallet');
     },
+    getWeb3: async () => null,
   },
 };

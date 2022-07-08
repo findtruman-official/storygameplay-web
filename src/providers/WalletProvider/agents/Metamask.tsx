@@ -1,5 +1,6 @@
 import detectEthereumProvider from '@metamask/detect-provider';
 import Web3 from 'web3';
+import type { WalletAgent, WalletConfig } from '../types';
 
 const listeners: Record<string, Function[]> = {};
 
@@ -88,6 +89,11 @@ const MetamaskAgent: WalletAgent = {
     } else {
       return { account: '', web3: undefined };
     }
+  },
+
+  getWeb3: async () => {
+    const provider = await getProvider();
+    return provider ? new Web3(provider) : null;
   },
 };
 

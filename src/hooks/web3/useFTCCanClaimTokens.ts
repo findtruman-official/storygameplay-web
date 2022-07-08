@@ -1,6 +1,5 @@
-import detectEthereumProvider from '@metamask/detect-provider';
+import { useWalletAgent } from '@/providers/WalletProvider';
 import { useRequest } from 'ahooks';
-import Web3 from 'web3';
 import type { AbiItem } from 'web3-utils';
 const Abi: AbiItem[] = [
   {
@@ -60,16 +59,24 @@ export function useFTCCanClaimTokens(
   tokens: number,
   proofs: string[],
 ) {
+  const agent = useWalletAgent();
   // 1. hasProofs && leaf not used => 'claimable'
   // 2. not Proofs => 'unclaimable'
   // 3. hasProofs && leaf used => 'claimed'
   return useRequest(
     async () => {
-      if (!account || !contract || !badgeId || !proofs || proofs.length === 0)
+      if (
+        !account ||
+        !contract ||
+        !badgeId ||
+        !proofs ||
+        proofs.length === 0 ||
+        !agent
+      )
         return 'unclaimable';
+      const web3 = await agent.getWeb3();
+      if (!web3) return 'unclaimable';
 
-      const provider = (await detectEthereumProvider()) as any;
-      const web3 = new Web3(provider);
       const instance = new web3.eth.Contract(Abi, contract);
 
       const leaf = await instance.methods['formatAchievementRewardTokensLeaf'](
@@ -81,7 +88,7 @@ export function useFTCCanClaimTokens(
       return used ? 'claimed' : 'claimable';
     },
     {
-      refreshDeps: [contract, badgeId, proofs, account],
+      refreshDeps: [contract, badgeId, proofs, account, agent],
     },
   );
 }

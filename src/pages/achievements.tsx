@@ -1,8 +1,8 @@
 import type React from 'react';
-import { useWallet, useWalletAgent } from '@/providers/WalletProvider';
+import { useWallet } from '@/providers/WalletProvider';
 import { AchievementCard } from '@/components/Achievement';
 import styles from './achievements.less';
-import { Col, Row } from 'antd';
+import { Alert, Col, Modal, Row } from 'antd';
 import { NumberCard } from '@/components/Tokens';
 import { useRequest } from 'ahooks';
 import { listBadgeStatus } from '@/services/api';
@@ -12,8 +12,10 @@ import { readableTokens } from '@/utils';
 import { ThemeButton } from '@/components/Button';
 import { globalEvent } from '@/utils/events';
 import { Polygon } from '@/components/svg/Polygon';
+import { useChainId } from '@/hooks/web3/useChainId';
+
 const AchievementPage: React.FC<{}> = (props) => {
-  const { account } = useWallet();
+  const { account, connected } = useWallet();
 
   const badgeReq = useRequest(
     () =>
@@ -29,9 +31,18 @@ const AchievementPage: React.FC<{}> = (props) => {
   const tokenBalance = useERC20Balance(FTT_ADDRESS, account);
 
   const badges = badgeReq.data || LoadingScenes;
-
+  const chainIdReq = useChainId();
   return (
     <div className={styles.page}>
+      {connected &&
+        !chainIdReq.loading &&
+        chainIdReq.data !== undefined &&
+        chainIdReq.data !== 80001 && (
+          <Modal visible closable={false} footer={false} centered>
+            <Alert type="info" message="Please use Polygon Testnet Mumbai" />
+          </Modal>
+        )}
+
       <Title loading={tokenBalance.loading}>My Tokens</Title>
 
       {account ? (
