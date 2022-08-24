@@ -5,19 +5,13 @@ export default {
       path: '/',
       component: '@/providers/WalletProvider/index',
       routes: [
+        { exact: true, path: '/', component: 'index' },
         {
-          path: '/',
-          component: '@/layouts/BannerLayout',
-          routes: [
-            { exact: true, path: '/', component: 'index' },
-            {
-              exact: true,
-              path: '/achievements',
-              component: 'achievements',
-            },
-          ],
+          exact: true,
+          path: '/achievements',
+          component: 'achievements',
         },
-      ],
+      ]
     },
   ],
   history: {
@@ -30,5 +24,5 @@ export default {
       pathRewrite: { '^/api': '' },
     },
   },
-  publicPath: './',
+  publicPath: '/',
 };
