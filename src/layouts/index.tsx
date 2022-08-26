@@ -39,7 +39,7 @@ export default function Layout() {
               pathname === '/' ? styles.menuItemActive : styles.menuItem
             }
           >
-            Home
+            Story-Gameplay
           </a>
           <div>/</div>
           <a
