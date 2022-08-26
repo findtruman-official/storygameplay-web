@@ -5,17 +5,11 @@ export default {
       path: '/',
       component: '@/providers/WalletProvider/index',
       routes: [
+        { exact: true, path: '/', component: 'index' },
         {
-          path: '/',
-          component: '@/layouts/BannerLayout',
-          routes: [
-            { exact: true, path: '/', component: 'index' },
-            {
-              exact: true,
-              path: '/achievements',
-              component: 'achievements',
-            },
-          ],
+          exact: true,
+          path: '/achievements',
+          component: 'achievements',
         },
       ],
     },
@@ -30,5 +24,5 @@ export default {
       pathRewrite: { '^/fcc/api': '/fcc/api' },
     },
   },
-  // publicPath: './',
+  publicPath: '/',
 };

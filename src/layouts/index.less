@@ -1,0 +1,52 @@
+.banner {
+  position: fixed;
+  top: 0;
+  // left: 0;
+  right: 0;
+  padding: 24px;
+  z-index: 100;
+}
+
+.menuContainer {
+  position: absolute;
+  z-index: 99;
+  width: 100%;
+}
+
+.menu {
+  width: fit-content;
+  margin: 24px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 24px;
+  padding: 18px 24px;
+  font-size: 24px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.35);
+  transition: all 0.3s ease;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.menuItem {
+  font-family: TieJi;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+.menuItem:hover {
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration: none;
+}
+.menuItemActive {
+  font-family: TieJi;
+  transition: all 0.3s ease;
+  color: rgba(255, 255, 255, 0.95);
+  cursor: auto;
+  font-weight: bold;
+  text-decoration: none;
+}
+.menuItemActive:hover {
+  color: rgba(255, 255, 255, 0.95);
+}
