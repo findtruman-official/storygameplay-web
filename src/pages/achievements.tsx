@@ -62,9 +62,10 @@ const AchievementPage: React.FC<{}> = (props) => {
 
       <Title loading={badgeReq.loading}> My Achievements </Title>
       <div className={styles.tip}>
-        <span>FindTruman badges will be minted on the </span>
+        <span>FindTruman badges will be minted on chain. </span>
+        {/* <span>FindTruman badges will be minted on the </span>
         <Polygon />
-        <span> Polygon(mumbai) Network.</span>
+        <span> Polygon(mumbai) Network.</span> */}
       </div>
 
       <Row gutter={[24, 24]}>
