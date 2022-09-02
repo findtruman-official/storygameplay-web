@@ -2,15 +2,18 @@ import React, { useMemo, useState } from 'react';
 import { NoneWalletConfig } from './agents/None';
 import { WalletContext } from './context';
 import { MetamaskWalletConfig } from '@/providers/WalletProvider/agents/Metamask';
-import { Outlet } from 'umi';
 import { SequenceWalletConfig } from './agents/Sequence';
+import { WalletConfig, WalletType } from '@/providers/WalletProvider/types';
 
 export interface WalletProviderProps {
   configs?: WalletConfig[];
   children?: React.ReactNode;
 }
 
-const DefaultConfigs: WalletConfig[] = [MetamaskWalletConfig, SequenceWalletConfig];
+const DefaultConfigs: WalletConfig[] = [
+  MetamaskWalletConfig,
+  SequenceWalletConfig,
+];
 
 export const WalletProvider: React.FC<WalletProviderProps> = ({
   configs = DefaultConfigs,
@@ -46,7 +49,6 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({
         prevWallet.agent.disconnect();
       }
     }
-
     const newAccount = await targetWallet.agent.connect({
       onConnected: (web3) => {},
       onAccountChanged: ({ account }) => {
@@ -133,7 +135,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({
         configs: _configs,
       }}
     >
-      <Outlet />
+      {children}
     </WalletContext.Provider>
   );
 };

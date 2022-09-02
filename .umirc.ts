@@ -1,17 +1,11 @@
 export default {
   npmClient: 'pnpm',
   routes: [
+    { exact: true, path: '/', component: 'index' },
     {
-      path: '/',
-      component: '@/providers/WalletProvider/index',
-      routes: [
-        { exact: true, path: '/', component: 'index' },
-        {
-          exact: true,
-          path: '/achievements',
-          component: 'achievements',
-        },
-      ],
+      exact: true,
+      path: '/achievements',
+      component: 'achievements',
     },
   ],
   history: {
@@ -24,5 +18,6 @@ export default {
       pathRewrite: { '^/fcc/api': '/fcc/api' },
     },
   },
-  publicPath: '/',
+  mfsu: false,
+  publicPath: process.env.NODE_ENV === 'development' ? '/' : './',
 };

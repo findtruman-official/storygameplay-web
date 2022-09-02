@@ -1,6 +1,6 @@
 import { TextButton } from '@/components/Button';
 import { ConnectWalletModal } from '@/components/Wallet';
-import { useWallet } from '@/providers/WalletProvider';
+import WalletProvider, { useWallet } from '@/providers/WalletProvider';
 import { Col, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Outlet } from 'umi';
@@ -22,7 +22,7 @@ export default function Layout() {
   }, []);
 
   return (
-    <>
+    <WalletProvider>
       {connected && (
         <Row justify="end" className={styles.banner}>
           <Col>
@@ -66,6 +66,6 @@ export default function Layout() {
       <Outlet />
 
       <ConnectWalletModal visible={vis} onClose={() => setVis(false)} />
-    </>
+    </WalletProvider>
   );
 }
